@@ -9,7 +9,7 @@ get_arguments_from_environment() {
 	do
 		arg_name=$(echo ${env_var#REDIS_CONFIG_} | tr "[:upper:]" "[:lower:]" | sed -e "s/_/-/g")
 		arg_value=$(printenv $env_var)
-		args="$args --$arg_name '$arg_value'"
+		args="$args --$arg_name $arg_value"
 	done
 	echo $args
 }
@@ -29,7 +29,7 @@ fi
 args=$(get_arguments_from_environment)
 
 if [ "$args" != "" ] && [ "$1" = "redis-server" ]; then
-	set -- "$@" "$args"
+	set -- "$@" $args
 fi
 
 exec "$@"
